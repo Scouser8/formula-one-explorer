@@ -14,7 +14,7 @@ const CARD_VIEW = "card";
 
 function Seasons() {
   const [seasons, setSeasons] = useState<Season[]>([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
 
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ function Seasons() {
   useEffect(() => {
     axios(
       `/f1/seasons.json?limit=${DEFAULT_PAGE_SIZE}&offset=${
-        page * DEFAULT_PAGE_SIZE
+        (page - 1) * DEFAULT_PAGE_SIZE
       }`
     ).then((res) => {
       setTotalCount(res.data.MRData.total);

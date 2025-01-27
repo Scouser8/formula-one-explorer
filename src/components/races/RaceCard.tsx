@@ -1,25 +1,36 @@
+import { formattedDate } from "@/utils";
 import CustomCard from "../customCard/CustomCard";
-import { Season } from "@/types";
+import { Race } from "@/types";
 
 type Props = {
-  season: Season;
+  race: Race;
+  onClick?: Function;
 };
 
 function RaceCard(props: Props) {
-  const { season } = props;
+  const { race, onClick } = props;
 
   return (
     <CustomCard
       className="shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg"
-      title={`Season: ${season.season}`}
-      onClick={() => {}}
+      title={`Race: ${race.raceName}`}
+      onClick={() => onClick?.()}
     >
-      <span className="text-pretty">
+      <div className="space-y-2">
+        <p>Circuit: {race.Circuit.circuitName}</p>
+        <p>Date: {formattedDate(new Date(race.date)) || ""}</p>
+      </div>
+      <p className="truncate text-pretty mt-2">
         Read more: &nbsp;
-        <a href={season.url} rel="noopener noreferrer" target="_blank">
-          {season.url}
+        <a
+          href={race.url}
+          rel="noopener noreferrer"
+          target="_blank"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {race.url}
         </a>
-      </span>
+      </p>
     </CustomCard>
   );
 }

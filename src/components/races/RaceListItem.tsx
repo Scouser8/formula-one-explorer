@@ -14,7 +14,12 @@ function RaceListItem(props: Props) {
       <p>Circuit: {race.Circuit.circuitName}</p>
       <p>
         Read More: &nbsp;
-        <a href={race.url} rel="noopener noreferrer" target="_blank">
+        <a
+          href={race.url}
+          rel="noopener noreferrer"
+          target="_blank"
+          onClick={(e) => e.stopPropagation()}
+        >
           {race.url}
         </a>
       </p>

@@ -1,7 +1,7 @@
 import axios from "@/axios";
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Race, Season } from "@/types";
+import { Race } from "@/types";
 import { Separator } from "../ui/separator";
 import { CustomPagination } from "../pagination/CustomPagination";
 import { DEFAULT_PAGE_SIZE } from "@/constants";
@@ -15,7 +15,7 @@ const CARD_VIEW = "card";
 function Races() {
   const { seasonYear } = useParams();
   const [races, setraces] = useState<Race[]>([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
 
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ function Races() {
   useEffect(() => {
     axios(
       `/f1/${seasonYear}/races.json?limit=${DEFAULT_PAGE_SIZE}&offset=${
-        page * DEFAULT_PAGE_SIZE
+        (page - 1) * DEFAULT_PAGE_SIZE
       }`
     ).then((res) => {
       setTotalCount(res.data.MRData.total);
@@ -52,7 +52,7 @@ function Races() {
       <TabsContent value={CARD_VIEW}>
         <div className="grid grid-cols-3 gap-4">
           {races?.map((race) => (
-            <RaceCard key={`${race.season}-${race.url}`} season={race} />
+            <RaceCard key={`${race.season}-${race.raceName}`} race={race} />
           ))}
         </div>
       </TabsContent>

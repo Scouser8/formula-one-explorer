@@ -13,7 +13,12 @@ function SeasonListItem(props: Props) {
       <h1 className="font-medium">Season: {title}</h1>
       <p>
         Read More: &nbsp;
-        <a href={content} rel="noopener noreferrer" target="_blank">
+        <a
+          href={content}
+          rel="noopener noreferrer"
+          target="_blank"
+          onClick={(e) => e.stopPropagation()}
+        >
           {content}
         </a>
       </p>

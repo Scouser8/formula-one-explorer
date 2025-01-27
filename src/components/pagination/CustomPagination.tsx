@@ -25,15 +25,15 @@ export const CustomPagination = (props: Props) => {
     maxPageButtonsToShow = 3,
   } = props;
 
-  const pagesCount = Math.ceil(totalCount / pageSize) - 1;
+  const pagesCount = Math.ceil(totalCount / pageSize);
   const getPagesToShow = () => {
     if (pagesCount <= maxPageButtonsToShow) {
       return Array.from({ length: pagesCount }, (_, i) => i + 1);
     }
 
     const pages: number[] = [];
-    const startPage = Math.max(0, page - 1);
-    const endPage = Math.min(pagesCount, page + 1);
+    const startPage = Math.max(1, page);
+    const endPage = Math.min(pagesCount, page + (maxPageButtonsToShow - 1));
 
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
@@ -45,9 +45,9 @@ export const CustomPagination = (props: Props) => {
   const pagesToShow = getPagesToShow();
 
   return (
-    <Pagination>
+    <Pagination className="mt-4">
       <PaginationContent>
-        {page > 0 && (
+        {page > 1 && (
           <PaginationItem>
             <PaginationPrevious href="#" onClick={() => setPage(page - 1)} />
           </PaginationItem>
@@ -58,13 +58,13 @@ export const CustomPagination = (props: Props) => {
           </PaginationItem>
         )}
         {pagesToShow.map((pageNumber) => (
-          <PaginationItem key={pageNumber}>
+          <PaginationItem key={`page-${pageNumber}`}>
             <PaginationLink
               href="#"
               isActive={pageNumber === page}
               onClick={() => setPage(pageNumber)}
             >
-              {pageNumber + 1}
+              {pageNumber}
             </PaginationLink>
           </PaginationItem>
         ))}

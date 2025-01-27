@@ -15,9 +15,14 @@ function SeasonCard(props: Props) {
       title={`Season: ${season.season}`}
       onClick={() => onClick?.()}
     >
-      <span className="text-pretty">
+      <span className="truncate text-pretty">
         Read more: &nbsp;
-        <a href={season.url} rel="noopener noreferrer" target="_blank">
+        <a
+          href={season.url}
+          rel="noopener noreferrer"
+          target="_blank"
+          onClick={(e) => e.stopPropagation()}
+        >
           {season.url}
         </a>
       </span>

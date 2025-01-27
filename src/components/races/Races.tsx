@@ -1,19 +1,20 @@
 import axios from "@/axios";
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import SeasonListItem from "./SeasonListItem";
-import { Season } from "@/types";
+import { Race, Season } from "@/types";
 import { Separator } from "../ui/separator";
-import SeasonCard from "./SeasonCard";
 import { CustomPagination } from "../pagination/CustomPagination";
 import { DEFAULT_PAGE_SIZE } from "@/constants";
-import { useNavigate } from "react-router";
+import RaceCard from "./RaceCard";
+import RaceListItem from "./RaceListItem";
+import { useNavigate, useParams } from "react-router";
 
 const LIST_VIEW = "list";
 const CARD_VIEW = "card";
 
-function Seasons() {
-  const [seasons, setSeasons] = useState<Season[]>([]);
+function Races() {
+  const { seasonYear } = useParams();
+  const [races, setraces] = useState<Race[]>([]);
   const [page, setPage] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
 
@@ -21,18 +22,16 @@ function Seasons() {
 
   useEffect(() => {
     axios(
-      `/f1/seasons.json?limit=${DEFAULT_PAGE_SIZE}&offset=${
+      `/f1/${seasonYear}/races.json?limit=${DEFAULT_PAGE_SIZE}&offset=${
         page * DEFAULT_PAGE_SIZE
       }`
     ).then((res) => {
       setTotalCount(res.data.MRData.total);
-      setSeasons(res.data.MRData.SeasonTable.Seasons);
+      setraces(res.data.MRData.RaceTable.Races);
     });
   }, [page]);
 
-  const handleNavigateToRaces = (season: string) => {
-    navigate(`/season/${season}/races`);
-  };
+  const handleNavigateToDrivers = () => {};
 
   return (
     <Tabs defaultValue={LIST_VIEW} className="w-full">
@@ -42,26 +41,18 @@ function Seasons() {
       </TabsList>
       <TabsContent value={LIST_VIEW}>
         <div className="w-full flex flex-wrap py-6 gap-x-8">
-          {seasons?.map((season, ndx) => (
-            <div className="max-w-1/2 flex-1" key={season.url}>
-              <SeasonListItem
-                title={season.season}
-                content={season.url}
-                onClick={() => handleNavigateToRaces(season.season)}
-              />
-              {ndx + 2 < seasons.length && <Separator className="my-4" />}
+          {races?.map((race, ndx) => (
+            <div className="max-w-1/2 flex-1" key={race.url}>
+              <RaceListItem race={race} onClick={handleNavigateToDrivers} />
+              {ndx + 2 < races.length && <Separator className="my-4" />}
             </div>
           ))}
         </div>
       </TabsContent>
       <TabsContent value={CARD_VIEW}>
         <div className="grid grid-cols-3 gap-4">
-          {seasons?.map((season) => (
-            <SeasonCard
-              key={`${season.season}-${season.url}`}
-              season={season}
-              onClick={() => handleNavigateToRaces(season.season)}
-            />
+          {races?.map((race) => (
+            <RaceCard key={`${race.season}-${race.url}`} season={race} />
           ))}
         </div>
       </TabsContent>
@@ -70,4 +61,4 @@ function Seasons() {
   );
 }
 
-export default Seasons;
+export default Races;

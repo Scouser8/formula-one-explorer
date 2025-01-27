@@ -3,17 +3,16 @@ import { Season } from "@/types";
 
 type Props = {
   season: Season;
-  onClick?: Function;
 };
 
-function SeasonCard(props: Props) {
-  const { season, onClick } = props;
+function RaceCard(props: Props) {
+  const { season } = props;
 
   return (
     <CustomCard
       className="shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg"
       title={`Season: ${season.season}`}
-      onClick={() => onClick?.()}
+      onClick={() => {}}
     >
       <span className="text-pretty">
         Read more: &nbsp;
@@ -25,4 +24,4 @@ function SeasonCard(props: Props) {
   );
 }
 
-export default SeasonCard;
+export default RaceCard;

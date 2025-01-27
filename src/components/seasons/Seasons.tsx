@@ -1,31 +1,31 @@
 import axios from "@/axios";
-import { Fragment, useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SeasonListItem from "./SeasonListItem";
 import { Season } from "@/types";
 import { Separator } from "../ui/separator";
 import SeasonCard from "./SeasonCard";
+import { CustomPagination } from "../pagination/CustomPagination";
+import { DEFAULT_PAGE_SIZE } from "@/constants";
 
 const LIST_VIEW = "list";
 const CARD_VIEW = "card";
 
 function Seasons() {
   const [seasons, setSeasons] = useState<Season[]>([]);
+  const [page, setPage] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
-    axios("/f1/seasons.json").then((res) =>
-      setSeasons(res.data.MRData.SeasonTable.Seasons)
-    );
-  }, []);
+    axios(
+      `/f1/seasons.json?limit=${DEFAULT_PAGE_SIZE}&offset=${
+        page * DEFAULT_PAGE_SIZE
+      }`
+    ).then((res) => {
+      setTotalCount(res.data.MRData.total);
+      setSeasons(res.data.MRData.SeasonTable.Seasons);
+    });
+  }, [page]);
 
   const handleNavigateToRaces = () => {};
 
@@ -52,12 +52,14 @@ function Seasons() {
       <TabsContent value={CARD_VIEW}>
         <div className="grid grid-cols-3 gap-4">
           {seasons?.map((season) => (
-            <div className="flex-grow-1 overflow-hidden" key={season.url}>
-              <SeasonCard season={season} />
-            </div>
+            <SeasonCard
+              key={`${season.season}-${season.url}`}
+              season={season}
+            />
           ))}
         </div>
       </TabsContent>
+      <CustomPagination page={page} setPage={setPage} totalCount={totalCount} />
     </Tabs>
   );
 }

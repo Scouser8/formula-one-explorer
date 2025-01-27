@@ -9,7 +9,11 @@ function SeasonCard(props: Props) {
   const { season } = props;
 
   return (
-    <CustomCard title={`Season: ${season.season}`} onClick={() => {}}>
+    <CustomCard
+      className="shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg"
+      title={`Season: ${season.season}`}
+      onClick={() => {}}
+    >
       <span className="text-pretty">
         Read more: &nbsp;
         <a href={season.url} rel="noopener noreferrer" target="_blank">

@@ -1,8 +1,8 @@
 import { useEffect, useState, lazy } from "react";
 import "./App.css";
-import Layout from "./components/Layout";
+import Layout from "./components/layout";
 
-const Seasons = lazy(() => import("./components/Seasons"));
+const Seasons = lazy(() => import("./components/seasons/Seasons"));
 
 function App() {
   const [count, setCount] = useState(0);

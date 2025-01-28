@@ -1,50 +1,21 @@
+This project initial setup was by using these libraries/frameworks
+
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+In addition for development I have decided to pick the most simple & easy to customize libraries packages,
 
-Currently, two official plugins are available:
+Such as: Tailwindcss, Shadcn, axios.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+I didn't see a case that urgently need a global state allover the application, so I decided not to complicate things by using Redux toolkit or something like that.
 
-## Expanding the ESLint configuration
+However, if needed Zustand of React Context could do the job for this app.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Although Redux setup is much easier now with redux toolkit & hooks, but still its a kind of overkill for a small project, but definitely a great choice for scalability later on.
 
-- Configure the top-level `parserOptions` property like this:
+More packages could be used like React Query, Advanced Charts & Data Visualization libraries, bigger UI Frameworks if needed, Redux or Zustand for global state management.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Also, I for unit testing I think the best option since we've built our app using Vite is to use Vitest alongside with React Testing Library for compatibility because Jest for example doesn't integrate well with Vite.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+But still this needs to be confirmed since I didn't use Vitest before so this is my first try.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+This is an application showing basic data fetching & listing, applying navigation in a SPA & a sample of charts using recharts

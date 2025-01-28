@@ -24,7 +24,7 @@ function Seasons() {
 
   useEffect(() => {
     // React Query could be used later to integrate with Suspense & Lazy loading to avoid empty view till data is fetched
-    axios(
+    axios.get(
       `/f1/seasons.json?limit=${DEFAULT_PAGE_SIZE}&offset=${
         (page - 1) * DEFAULT_PAGE_SIZE
       }`

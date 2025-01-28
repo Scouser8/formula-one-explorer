@@ -11,6 +11,7 @@ import clsx from "clsx";
 
 type Props = {
   title: string;
+  headerIcon?: JSX.Element;
   description?: string;
   btnText?: string;
   onClick?: Function;
@@ -21,6 +22,7 @@ type Props = {
 export default function CustomCard(props: Props) {
   const {
     title,
+    headerIcon,
     description,
     btnText,
     onClick,
@@ -33,7 +35,10 @@ export default function CustomCard(props: Props) {
       onClick={() => onClick?.()}
     >
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <div className="flex justify-between items-center">
+          <CardTitle>{title}</CardTitle>
+          {!!headerIcon && headerIcon}
+        </div>
         {!!description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
       <CardContent className="space-y-2 truncate">{content}</CardContent>

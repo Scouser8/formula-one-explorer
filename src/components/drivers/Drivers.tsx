@@ -1,5 +1,5 @@
 import axios from "@/axios";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Result } from "@/types";
 import { Separator } from "../ui/separator";
@@ -7,6 +7,7 @@ import { CustomPagination } from "../pagination/CustomPagination";
 import { DEFAULT_PAGE_SIZE, LIST_CONTAINER_STYLES } from "@/constants";
 import { useParams } from "react-router";
 import DriverListItem from "./DriverListItem";
+import { DriversStatistics } from "./DriversStatistics";
 
 const DRIVERS_LIST_VIEW = "view-drivers";
 const STATISTICS_VIEW = "statistics";
@@ -57,7 +58,16 @@ function Drivers() {
             totalCount={totalCount}
           />
         </TabsContent>
-        <TabsContent value={STATISTICS_VIEW}></TabsContent>
+        <TabsContent value={STATISTICS_VIEW}>
+          <DriversStatistics
+            results={results.map((res) => ({
+              ...res,
+              Time: { ...res.Time, millis: Number(res.Time?.millis) / 1000 },
+            }))}
+            title={`Season: ${seasonYear}`}
+            description={`Round: ${round}`}
+          />
+        </TabsContent>
       </Tabs>
     </div>
   );

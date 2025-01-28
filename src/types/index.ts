@@ -38,6 +38,18 @@ export type Driver = {
   url: string;
 };
 
+type Time = {
+  millis: string | number;
+  time: string;
+};
+
+type FastestLap = {
+  AverageSpeed: {
+    units: string;
+    speed: string | number;
+  };
+};
+
 export type Result = {
   grid: string;
   laps: string;
@@ -47,4 +59,6 @@ export type Result = {
   positionText: string;
   status: string;
   Driver: Driver;
+  Time: Time;
+  FastestLap: FastestLap;
 };

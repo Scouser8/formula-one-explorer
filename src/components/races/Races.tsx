@@ -4,13 +4,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Race } from "@/types";
 import { Separator } from "../ui/separator";
 import { CustomPagination } from "../pagination/CustomPagination";
-import { DEFAULT_PAGE_SIZE, PINNED_RACES_LOCAL_STORAGE_KEY } from "@/constants";
+import {
+  DEFAULT_PAGE_SIZE,
+  PINNED_RACES_LOCAL_STORAGE_KEY,
+  CARDS_CONTAINER_STYLES,
+  LIST_CONTAINER_STYLES,
+  LIST_VIEW,
+  CARD_VIEW,
+} from "@/constants";
 import RaceCard from "./RaceCard";
 import RaceListItem from "./RaceListItem";
 import { useNavigate, useParams } from "react-router";
-
-const LIST_VIEW = "list";
-const CARD_VIEW = "card";
+import clsx from "clsx";
 
 function Races() {
   const { seasonYear } = useParams();
@@ -53,10 +58,10 @@ function Races() {
       </TabsList>
       <TabsContent value={LIST_VIEW}>
         {pinnedRaces?.length ? (
-          <div className="w-full flex flex-wrap py-6 gap-x-8">
+          <div className={LIST_CONTAINER_STYLES}>
             {pinnedRaces.map((race, ndx) => (
               <div
-                className="max-w-1/2 flex-1"
+                className="max-w-1/2"
                 key={`pinned-${race.season}-${race.raceName}`}
               >
                 <RaceListItem
@@ -71,12 +76,9 @@ function Races() {
           </div>
         ) : null}
         <Separator className="my-2" />
-        <div className="w-full flex flex-wrap py-6 gap-x-8">
+        <div className={LIST_CONTAINER_STYLES}>
           {races?.map((race, ndx) => (
-            <div
-              className="max-w-1/2 flex-1"
-              key={`${race.season}-${race.raceName}`}
-            >
+            <div className="max-w-1/2" key={`${race.season}-${race.raceName}`}>
               <RaceListItem
                 race={race}
                 onClick={handleNavigateToDrivers}
@@ -89,7 +91,7 @@ function Races() {
       </TabsContent>
       <TabsContent value={CARD_VIEW}>
         {pinnedRaces?.length ? (
-          <div className="grid grid-cols-3 gap-4 mb-4">
+          <div className={clsx(CARDS_CONTAINER_STYLES, "mb-4")}>
             {pinnedRaces?.map((race) => (
               <RaceCard
                 key={`pinned-${race.season}-${race.raceName}`}
@@ -101,7 +103,7 @@ function Races() {
           </div>
         ) : null}
         <Separator className="my-6" />
-        <div className="grid grid-cols-3 gap-4">
+        <div className={CARDS_CONTAINER_STYLES}>
           {races?.map((race) => (
             <RaceCard
               key={`${race.season}-${race.raceName}`}

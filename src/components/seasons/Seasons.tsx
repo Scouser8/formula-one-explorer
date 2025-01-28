@@ -6,11 +6,14 @@ import { Season } from "@/types";
 import { Separator } from "../ui/separator";
 import SeasonCard from "./SeasonCard";
 import { CustomPagination } from "../pagination/CustomPagination";
-import { DEFAULT_PAGE_SIZE } from "@/constants";
+import {
+  CARD_VIEW,
+  CARDS_CONTAINER_STYLES,
+  DEFAULT_PAGE_SIZE,
+  LIST_CONTAINER_STYLES,
+  LIST_VIEW,
+} from "@/constants";
 import { useNavigate } from "react-router";
-
-const LIST_VIEW = "list";
-const CARD_VIEW = "card";
 
 function Seasons() {
   const [seasons, setSeasons] = useState<Season[]>([]);
@@ -41,7 +44,7 @@ function Seasons() {
         <TabsTrigger value="card">Card View</TabsTrigger>
       </TabsList>
       <TabsContent value={LIST_VIEW}>
-        <div className="w-full flex flex-wrap py-6 gap-x-8">
+        <div className={LIST_CONTAINER_STYLES}>
           {seasons?.map((season, ndx) => (
             <div className="max-w-1/2 flex-1" key={season.url}>
               <SeasonListItem
@@ -55,7 +58,7 @@ function Seasons() {
         </div>
       </TabsContent>
       <TabsContent value={CARD_VIEW}>
-        <div className="grid grid-cols-3 gap-4">
+        <div className={CARDS_CONTAINER_STYLES}>
           {seasons?.map((season) => (
             <SeasonCard
               key={`${season.season}-${season.url}`}

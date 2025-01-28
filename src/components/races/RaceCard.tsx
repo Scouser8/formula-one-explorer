@@ -42,7 +42,7 @@ function RaceCard(props: Props) {
       }
     >
       <div className="space-y-2">
-        <p>Circuit: {race.Circuit.circuitName}</p>
+        <p className="truncate">Circuit: {race.Circuit.circuitName}</p>
         <p>Date: {formattedDate(new Date(race.date)) || ""}</p>
       </div>
       <p className="truncate text-pretty mt-2">

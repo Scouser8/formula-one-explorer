@@ -38,7 +38,7 @@ function RaceListItem(props: Props) {
         />
       </div>
       <p>Circuit: {race.Circuit.circuitName}</p>
-      <p>
+      <p className="truncate">
         Read More: &nbsp;
         <a
           href={race.url}

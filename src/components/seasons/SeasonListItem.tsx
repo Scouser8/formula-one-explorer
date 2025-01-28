@@ -3,13 +3,13 @@ import { Button } from "../ui/button";
 type Props = {
   title: string;
   content: string;
-  onClick: Function;
+  handleBtnClick: Function;
 };
 
 function SeasonListItem(props: Props) {
-  const { title, content, onClick } = props;
+  const { title, content, handleBtnClick } = props;
   return (
-    <div className="space-y-2" onClick={() => onClick()}>
+    <div className="space-y-2">
       <h1 className="font-medium">Season: {title}</h1>
       <p>
         Read More: &nbsp;
@@ -22,7 +22,7 @@ function SeasonListItem(props: Props) {
           {content}
         </a>
       </p>
-      <Button>View Races</Button>
+      <Button onClick={() => handleBtnClick()}>View Races</Button>
     </div>
   );
 }

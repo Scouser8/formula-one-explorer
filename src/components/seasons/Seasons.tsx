@@ -23,14 +23,17 @@ function Seasons() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // React Query could be used later to integrate with Suspense & Lazy loading to avoid empty view till data is fetched
     axios(
       `/f1/seasons.json?limit=${DEFAULT_PAGE_SIZE}&offset=${
         (page - 1) * DEFAULT_PAGE_SIZE
       }`
-    ).then((res) => {
-      setTotalCount(res.data.MRData.total);
-      setSeasons(res.data.MRData.SeasonTable.Seasons);
-    });
+    )
+      .then((res) => {
+        setTotalCount(res.data.MRData.total);
+        setSeasons(res.data.MRData.SeasonTable.Seasons);
+      })
+      .catch((err) => console.error(err));
   }, [page]);
 
   const handleNavigateToRaces = (season: string) => {
@@ -38,38 +41,45 @@ function Seasons() {
   };
 
   return (
-    <Tabs defaultValue={LIST_VIEW} className="w-full">
-      <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value={LIST_VIEW}>List View</TabsTrigger>
-        <TabsTrigger value="card">Card View</TabsTrigger>
-      </TabsList>
-      <TabsContent value={LIST_VIEW}>
-        <div className={LIST_CONTAINER_STYLES}>
-          {seasons?.map((season, ndx) => (
-            <div className="max-w-1/2 flex-1" key={season.url}>
-              <SeasonListItem
-                title={season.season}
-                content={season.url}
+    <div className="space-y-6">
+      <h1 className="text-3xl font-semibold">Formula One Seasons</h1>
+      <Tabs defaultValue={LIST_VIEW} className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value={LIST_VIEW}>List View</TabsTrigger>
+          <TabsTrigger value={CARD_VIEW}>Card View</TabsTrigger>
+        </TabsList>
+        <TabsContent value={LIST_VIEW}>
+          <div className={LIST_CONTAINER_STYLES}>
+            {seasons?.map((season, ndx) => (
+              <div className="max-w-1/2 flex-1" key={season.url}>
+                <SeasonListItem
+                  title={season.season}
+                  content={season.url}
+                  handleBtnClick={() => handleNavigateToRaces(season.season)}
+                />
+                {ndx + 2 < seasons.length && <Separator className="my-4" />}
+              </div>
+            ))}
+          </div>
+        </TabsContent>
+        <TabsContent value={CARD_VIEW}>
+          <div className={CARDS_CONTAINER_STYLES}>
+            {seasons?.map((season) => (
+              <SeasonCard
+                key={`${season.season}-${season.url}`}
+                season={season}
                 onClick={() => handleNavigateToRaces(season.season)}
               />
-              {ndx + 2 < seasons.length && <Separator className="my-4" />}
-            </div>
-          ))}
-        </div>
-      </TabsContent>
-      <TabsContent value={CARD_VIEW}>
-        <div className={CARDS_CONTAINER_STYLES}>
-          {seasons?.map((season) => (
-            <SeasonCard
-              key={`${season.season}-${season.url}`}
-              season={season}
-              onClick={() => handleNavigateToRaces(season.season)}
-            />
-          ))}
-        </div>
-      </TabsContent>
-      <CustomPagination page={page} setPage={setPage} totalCount={totalCount} />
-    </Tabs>
+            ))}
+          </div>
+        </TabsContent>
+        <CustomPagination
+          page={page}
+          setPage={setPage}
+          totalCount={totalCount}
+        />
+      </Tabs>
+    </div>
   );
 }
 

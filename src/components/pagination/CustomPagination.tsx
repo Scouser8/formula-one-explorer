@@ -7,6 +7,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { DEFAULT_PAGE_SIZE } from "@/constants";
 
 type Props = {
   page: number;
@@ -21,7 +22,7 @@ export const CustomPagination = (props: Props) => {
     page,
     setPage,
     totalCount,
-    pageSize = 15,
+    pageSize = DEFAULT_PAGE_SIZE,
     maxPageButtonsToShow = 3,
   } = props;
 

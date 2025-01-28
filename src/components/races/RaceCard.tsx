@@ -30,7 +30,7 @@ function RaceCard(props: Props) {
     <CustomCard
       className="shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg"
       title={`Race: ${race.raceName}`}
-      onClick={() => onClick?.()}
+      onClick={() => onClick?.(race.round)}
       headerIcon={
         <Pin
           className={clsx(

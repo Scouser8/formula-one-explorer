@@ -6,13 +6,13 @@ import { MouseEvent } from "react";
 
 type Props = {
   race: Race;
-  onClick?: Function;
+  handleBtnClick: Function;
   setPinnedRaces: React.Dispatch<React.SetStateAction<Race[]>>;
   isPinned?: boolean;
 };
 
 function RaceListItem(props: Props) {
-  const { race, onClick, setPinnedRaces, isPinned = false } = props;
+  const { race, handleBtnClick, setPinnedRaces, isPinned = false } = props;
 
   const handleTogglePinStatus = (e: MouseEvent<SVGSVGElement>) => {
     e.stopPropagation();
@@ -26,7 +26,7 @@ function RaceListItem(props: Props) {
   };
 
   return (
-    <div className="space-y-2" onClick={() => onClick?.()}>
+    <div className="space-y-2">
       <div className="flex justify-between">
         <h1 className="font-medium">Race: {race.raceName}</h1>
         <Pin
@@ -49,7 +49,7 @@ function RaceListItem(props: Props) {
           {race.url}
         </a>
       </p>
-      <Button>View Drivers</Button>
+      <Button onClick={() => handleBtnClick(race.round)}>View Drivers</Button>
     </div>
   );
 }

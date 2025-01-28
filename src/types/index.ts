@@ -26,3 +26,25 @@ export type Race = {
   date: string;
   time: string;
 };
+
+export type Driver = {
+  code: string;
+  dateOfBirth: string;
+  driverId: string;
+  familyName: string;
+  givenName: string;
+  nationality: string;
+  permanentNumber: string;
+  url: string;
+};
+
+export type Result = {
+  grid: string;
+  laps: string;
+  number: string;
+  points: string;
+  position: string;
+  positionText: string;
+  status: string;
+  Driver: Driver;
+};
